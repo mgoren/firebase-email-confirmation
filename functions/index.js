@@ -57,7 +57,7 @@ exports.sendEmailConfirmation = functions.database.ref(`${CONFIG_DATA_PATH}/{ITE
   const websiteLink = `https://${DETAILS_WEBSITE}`;
   const mailOptions = {
     from: '"PCDC" <contra@portlandcountrydance.org>',
-    to: val.email,
+    to: order.email,
     subject: 'Portland Megaband Payment Receipt',
     template: 'email',
     context: {
