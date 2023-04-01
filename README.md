@@ -1,7 +1,6 @@
-# Send Confirmation Emails with Cloud Functions
+# Configuration
 
-This sample shows how to send a confirmation emails to users who are subscribing/un-subscribing to a newsletter.
-
+firebase functions:config:set sendgrid.api_key="API_KEY_HERE"
 
 ## Functions Code
 

@@ -11,7 +11,7 @@
 <p>
   <strong>Contact info:</strong><br />
   {{order.fullName}}<br />
-  {{order.email}<br /}>
+  {{order.email}}<br /}>
   {{order.phone}}
 </p>
 
@@ -25,9 +25,9 @@
 
 <p>
   <strong>Amount paid:</strong><br />
-  Megaband admissions: {{order.admissionQuantity}} x ${{order.admissionCost}} = ${{order.admissionQuantity * order.admissionCost}}<br />
-  {{#if order.donation > 0}}Additional donation: ${{order.donation}}<br />{{/if}}
-  Total: ${{order.total}}
+  Megaband admissions: {{order.admissionQuantity}} x ${{order.admissionCost}} = ${{admissionTotal}}<br />
+  {{#if donation}}Additional donation: ${{order.donation}}<br />{{/if}}
+  {{#if donation}}Total: ${{order.total}}{{/if}}
 </p>
 
 <hr />
@@ -37,8 +37,8 @@
 <p>If you have not already done so, you can expedite the sign-in process by doing these ahead of time:</p>
 
 <p>
-  &#8674; Fill out the <a href={{CONTACT_TRACING_LINK}} target="_blank" rel="noreferrer">PCDC Contact Tracing form</a> online.<br />
-  &#8674; Print and bring with you a signed copy of the <a href={{WAIVER_LINK}} target="_blank" rel="noreferrer">PCDC event waiver</a>.
+  &#8674; Fill out the <a href={{CONTACT_TRACING_LINK}}>PCDC Contact Tracing form</a> online.<br />
+  &#8674; Print and bring with you a signed copy of the <a href={{WAIVER_LINK}}>PCDC event waiver</a>.
 </p>
 
 <hr />
@@ -54,9 +54,14 @@
 
 <p>Parking is $3/car.</p>
 
-<p><strong>Covid policy:</strong> Everyone must be vaccinated, including at least one booster if eligible. A well-fitted mask covering nose and mouth is required for attendees. PCDC's full Covid policy is available <a href="https://pcdc.fun/covid19" target="_blank" rel="noreferrer">here</a>.</p>
+<p>
+  <strong>Covid policy:</strong><br />
+  Everyone must be vaccinated, including at least one booster if eligible.<br />
+  A well-fitted mask covering nose and mouth is required for attendees.<br />
+  PCDC's full Covid policy is available <a href={{COVID_POLICY_LINK}}>here</a>.
+</p>
 
 <p>
-  See <a href={{websiteLink}} target="_blank" rel="noreferrer">{DETAILS_WEBSITE}</a> for further details.<br />
+  See <a href={{websiteLink}}>{{DETAILS_WEBSITE}}</a> for further details.<br />
   Email <a href={{mailtoLink}}>{{EMAIL_CONTACT}}</a> if you have any questions.
 </p>
