@@ -1,6 +1,14 @@
+### This is based very closely on Google's [starter code](https://github.com/firebase/functions-samples/tree/main/email-confirmation).
+
 # Configuration
 
-firebase functions:config:set sendgrid.api_key="API_KEY_HERE"
+firebase functions:config:set sendgrid.api_key="SENDGRID_API_KEY"
+
+# Deployment
+
+`firebase deploy --only functions`
+
+(Answer no when asked if you want to erase other cloud functions.)
 
 ## Functions Code
 
