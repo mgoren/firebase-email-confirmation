@@ -18,19 +18,14 @@
 // TODO: Set these
 const FROM = '"PCDC" <contra@portlandcountrydance.org>';
 const SUBJECT = 'Portland Megaband Payment Receipt';
-const EMAIL_CONTACT = 'contra@portlandcountrydance.org';
-const DETAILS_WEBSITE = 'portlandmegaband.com';
-const CONTACT_TRACING_LINK = 'https://pcdc.fun/contact-trace';
-const WAIVER_LINK = 'https://pcdc.fun/files/PCDC_Events_Waiver.pdf';
-const COVID_POLICY_LINK = 'https://pcdc.fun/covid-policy';
 
-// TODO: Set this to match Firebase database path
+// Firebase database path
 const CONFIG_DATA_PATH = '/orders';
 
 const functions = require('firebase-functions');
-const hbs = require('nodemailer-express-handlebars');
 const nodemailer = require('nodemailer');
-const path = require('path');
+// const hbs = require('nodemailer-express-handlebars');
+// const path = require('path');
 
 // Configure the email transport using the default SMTP transport and a GMail account.
 // For other types of transports such as Sendgrid see https://nodemailer.com/transports/
@@ -56,46 +51,25 @@ const mailTransport = nodemailer.createTransport({
   }
 })
 
-const handlebarOptions = {
-  viewEngine: {
-      partialsDir: path.resolve('./views/'),
-      defaultLayout: false,
-  },
-  viewPath: path.resolve('./views/'),
-};
+// const handlebarOptions = {
+//   viewEngine: {
+//       partialsDir: path.resolve('./views/'),
+//       defaultLayout: false,
+//   },
+//   viewPath: path.resolve('./views/'),
+// };
 
 // use a template file with nodemailer
-mailTransport.use('compile', hbs(handlebarOptions))
+// mailTransport.use('compile', hbs(handlebarOptions))
 
 exports.sendEmailConfirmation = functions.database.ref(`${CONFIG_DATA_PATH}/{ITEM}`).onCreate(async (snap) => {
   const order = snap.val();
-  const mailtoLink = `mailto:${EMAIL_CONTACT}`;
-  const websiteLink = `https://${DETAILS_WEBSITE}`;
-  const admissionTotal = order.admissionQuantity * order.admissionCost;
-  const donation = order.donation > 0;
   const mailOptions = {
     from: FROM,
     to: order.email,
     subject: SUBJECT,
-    template: 'email',
-    context: {
-      order: order,
-      EMAIL_CONTACT: EMAIL_CONTACT,
-      DETAILS_WEBSITE: DETAILS_WEBSITE,
-      CONTACT_TRACING_LINK: CONTACT_TRACING_LINK,
-      WAIVER_LINK: WAIVER_LINK,
-      COVID_POLICY_LINK: COVID_POLICY_LINK,
-      mailtoLink: mailtoLink,
-      websiteLink: websiteLink,
-      admissionTotal: admissionTotal,
-      donation: donation
-    }
+    html: order.receipt
   };
-
-  // mailOptions.text = 'Thanks you for subscribing to our newsletter. You will receive our next weekly newsletter.';
-  // mailOptions.html = `
-  //   <p>Thanks you for subscribing to our newsletter. You will receive our next weekly newsletter.</p>
-  // `;
 
   try {
     await mailTransport.sendMail(mailOptions);

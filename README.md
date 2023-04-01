@@ -2,7 +2,11 @@
 
 # Configuration
 
-firebase functions:config:set sendgrid.api_key="SENDGRID_API_KEY"
+`firebase functions:config:set sendgrid.api_key="SENDGRID_API_KEY"`
+
+Set **FROM** and **SUBJECT** in `index.js`
+
+Everything else should work as-is. This assumes that orders are saved to /orders in Firebase, and that order.receipt contains the HTML you want to send.
 
 # Deployment
 
