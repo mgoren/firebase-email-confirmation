@@ -66,7 +66,7 @@ exports.sendEmailConfirmation = functions.database.ref(`${CONFIG_DATA_PATH}/{ITE
   const order = snap.val();
   const mailOptions = {
     from: FROM,
-    to: order.email,
+    to: order.people[0].email,
     subject: SUBJECT,
     html: order.receipt
   };
@@ -75,7 +75,7 @@ exports.sendEmailConfirmation = functions.database.ref(`${CONFIG_DATA_PATH}/{ITE
     await mailTransport.sendMail(mailOptions);
     functions.logger.log(
       `Receipt sent to:`,
-      order.email
+      order.people[0].email
     );
   } catch(error) {
     functions.logger.error(
