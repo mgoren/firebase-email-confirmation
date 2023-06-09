@@ -17,7 +17,7 @@
 
 // TODO: Set these
 const FROM = '"PCDC" <contra@portlandcountrydance.org>';
-const SUBJECT = 'Portland Megaband Payment Receipt';
+const SUBJECT = 'ECD Ball Registration';
 
 // Firebase database path
 const CONFIG_DATA_PATH = '/orders';
@@ -64,24 +64,23 @@ const mailTransport = nodemailer.createTransport({
 
 exports.sendEmailConfirmation = functions.database.ref(`${CONFIG_DATA_PATH}/{ITEM}`).onCreate(async (snap) => {
   const order = snap.val();
-  const mailOptions = {
-    from: FROM,
-    to: order.people[0].email,
-    subject: SUBJECT,
-    html: order.receipt
-  };
 
-  try {
-    await mailTransport.sendMail(mailOptions);
-    functions.logger.log(
-      `Receipt sent to:`,
-      order.people[0].email
-    );
-  } catch(error) {
-    functions.logger.error(
-      'There was an error while sending the email:',
-      error
-    );
+  for (let i = 0; i < order.people.length; i++) {
+    const person = order.people[i];
+    const receipt = i === 0 ? order.receipt : order.additionalPersonReceipt;
+    const mailOptions = {
+      from: FROM,
+      to: person.email,
+      subject: SUBJECT,
+      html: receipt
+    };
+    try {
+      await mailTransport.sendMail(mailOptions);
+      functions.logger.log(`Receipt sent to:`, person.email);
+    } catch(error) {
+      functions.logger.error('There was an error while sending the email:', error);
+    }
   }
+
   return null;
 });
