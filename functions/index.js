@@ -16,7 +16,7 @@
 'use strict';
 
 // TODO: Set these
-const FROM = '"ECD Ball" <registrar@portlandecdball.info>';
+const FROM = '"Portland ECD Ball" <registrar@portlandecdball.info>';
 const SUBJECT = 'ECD Ball Registration';
 
 // Firebase database path
